@@ -22,7 +22,7 @@
 
 		<div class="section-title">
 		<h1>Ed25519<br>Signature Tool</h1>
-		<p>Please read the <a href="#documentation">documentation</a> for more information, and read the <a href="LICENSE">licence</a> before use.</p>
+		<p>Please read the <a href="#documentation">documentation</a> for more information, and read the <a href="LICENSE">license</a> before use.</p>
 		</div> <!--/.section-title-->
 
 		<div class="section-tests">
@@ -104,16 +104,16 @@
 
 		<p><textarea id="signatureOutput" rows="4" cols="50" readonly class="textfield"></textarea></p>
 		
-		<h3>JWS Compact Serialisation</h3>
+		<h3>JWS Compact Serialization</h3>
 
-		<p><code>JWS Compact Serialisation = BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload) || '.' || BASE64URL(JWS Signature)</code> <a href="#doc-jws-compact-serial">[?]</a></p>
+		<p><code>JWS Compact Serialization = BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload) || '.' || BASE64URL(JWS Signature)</code> <a href="#doc-jws-compact-serial">[?]</a></p>
 
-		<p><textarea id="jwsCompactSerialised" rows="4" cols="50" class="textfield"></textarea></p>
+		<p><textarea id="jwsCompactSerialized" rows="4" cols="50" class="textfield"></textarea></p>
 
 		<p>
 			<table>
 				<tr>
-					<td><input type="button" id="deconstructJws" value="Deconstruct JWS" class="btn"></input>  <label>This extracts the JWS Protected Header and Payload from the compact serialised JWS.</label></td>
+					<td><input type="button" id="deconstructJws" value="Deconstruct JWS" class="btn"></input>  <label>This extracts the JWS Protected Header and Payload from the compact serialized JWS.</label></td>
 					<td><input type="button" id="validateJws" value="Validate Ed25519-signed JWS" class="btn"></input> <label>Please provide Ed25519 Public JWK above to validate.</label></td>
 				</tr>
 			
@@ -134,11 +134,11 @@
 	<h3>Generate the JWK Thumbprint of an Ed25519 JWK</h3>
 	<p>This tool is able to generate the SHA-256 JWK Thumbprint of a Ed25519 JWK given the public JWK per <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the JWK into the "Public JWK" text box and click the "Generate JWK Thumbprint" button.</p>
 	<h3>Generate an Ed25519-signed JWS</h3>
-	<p>This tool is able to generate an Ed25519-signed JSON Web Signature (JWS) per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Secret JWK, JWS Protected Header, and JWS Payload, and then click the "Generate Signing Input and Signature" button. The JWS in Compact Serialisation format will be computed.</p>
+	<p>This tool is able to generate an Ed25519-signed JSON Web Signature (JWS) per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Secret JWK, JWS Protected Header, and JWS Payload, and then click the "Generate Signing Input and Signature" button. The JWS in Compact Serialization format will be computed.</p>
 	<h3>Deconstruct a JWS</h3>
-	<p>This tool is able to extract the JWS Protected Header and JWS Payload of a given JWS in Compact Serialisation format per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>. Enter the JWS Compact Serialisation data, and click the "Deconstruct JWS" button. The JWS Protected Header and JWS Payload will be shown on their fields respectively.</p>
+	<p>This tool is able to extract the JWS Protected Header and JWS Payload of a given JWS in Compact Serialization format per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>. Enter the JWS Compact Serialization data, and click the "Deconstruct JWS" button. The JWS Protected Header and JWS Payload will be shown on their fields respectively.</p>
 	<h3>Validate an Ed25519-signed JWS</h3>
-	<p>This tool is able to validate an Ed25519-signed JWS per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Public JWK and JWS Compact Serialisation data, and click the "Validate Ed25519-signed JWS" button. A prompt will show the result of the validation.</p>
+	<p>This tool is able to validate an Ed25519-signed JWS per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Public JWK and JWS Compact Serialization data, and click the "Validate Ed25519-signed JWS" button. A prompt will show the result of the validation.</p>
 	<h2>Overview</h2>
 	<p>This tool is used to generate keys, sign, and verify using the Ed25519 signature algorithm in the context of:
 		<ul>
@@ -163,9 +163,9 @@
 	<h3 id="doc-jwk-thumbprint">JWK Thumbprint Limitations</h3>
 	<p>The JWK Thumbprint according to <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> should be computed only with public key material (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.1">section 3.2.1</a>), and only on mandatory parameters (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.2">section 3.2.2</a>). Because this tool is designed for the Ed25519 signature algorithm, it only knows which are the mandatory public key parameters for the Ed25519 algorithm. Hence, this tool MUST NOT be used to generate JWK Thumbprints of non-Ed25519 JWKs.</p>
 	<h3 id="doc-jws-protected-header">JWS Protected Header Requirements</h3>
-	<p>According to <a href="https://tools.ietf.org/html/rfc7515#section-7.1">RFC 7515 section 7.1</a>, a JWS serialised according to the Compact Serialisation format MUST contain a JWS Protected Header. And according to <a href="https://tools.ietf.org/html/rfc7515#section-4">section 4</a>, such header MUST contain the <code>"alg"</code> parameter. In a Ed25519-signed JWS, per <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>, the <code>"alg"</code> parameter MUST be equal to <code>"EdDSA"</code>. This tool will validate that the JWS Protected Header contains the <code>"alg"</code> parameter equal to <code>"EdDSA"</code>. The tool will ignore other parameters in the header, and will not validate the <code>"crit"</code> parameter according to <a href="https://tools.ietf.org/html/rfc7515#section-4.1.11">section 4.1.11</a>.</p>
-	<h3 id="doc-jws-compact-serial">JWS Compact Serialisation Computation</h3>
-	<p>For further details on how the components of the JWS Compact Serialisation are computed, please refer to <a href="https://tools.ietf.org/html/rfc7515#section-5.1">RFC 7515 section 5.1</a>.</p>
+	<p>According to <a href="https://tools.ietf.org/html/rfc7515#section-7.1">RFC 7515 section 7.1</a>, a JWS serialized according to the Compact Serialization format MUST contain a JWS Protected Header. And according to <a href="https://tools.ietf.org/html/rfc7515#section-4">section 4</a>, such header MUST contain the <code>"alg"</code> parameter. In a Ed25519-signed JWS, per <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>, the <code>"alg"</code> parameter MUST be equal to <code>"EdDSA"</code>. This tool will validate that the JWS Protected Header contains the <code>"alg"</code> parameter equal to <code>"EdDSA"</code>. The tool will ignore other parameters in the header, and will not validate the <code>"crit"</code> parameter according to <a href="https://tools.ietf.org/html/rfc7515#section-4.1.11">section 4.1.11</a>.</p>
+	<h3 id="doc-jws-compact-serial">JWS Compact Serialization Computation</h3>
+	<p>For further details on how the components of the JWS Compact Serialization are computed, please refer to <a href="https://tools.ietf.org/html/rfc7515#section-5.1">RFC 7515 section 5.1</a>.</p>
 	</div> <!--/.doc-->
 
 
