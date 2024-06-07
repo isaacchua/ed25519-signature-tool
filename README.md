@@ -15,4 +15,4 @@ All Base64 data used in this tool conform to the Base 64 URL-safe encoding witho
 
 Built using [libsodium.js](https://github.com/jedisct1/libsodium.js), the JavaScript port of [libsodium](https://libsodium.gitbook.io/), [jQuery](https://jquery.com/), and [HTML5 Boilerplate](https://html5boilerplate.com/).
 
-Please read the [licence](LICENSE.txt) before use.
+Please read the [licence](LICENSE) before use.
