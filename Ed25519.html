@@ -18,156 +18,148 @@
 	<![endif]-->
 
 	<form>
-		<div class="page-header">
+		<div class="container container-header">
+			<div class="section section-title">
+				<h1>Ed25519<br>Signature Tool</h1>
+				<p>Please read the <a href="#documentation">documentation</a> for more information, and read the <a href="LICENSE">license</a> before use.</p>
+			</div> <!--/.section.section-title-->
 
-		<div class="section-title">
-		<h1>Ed25519<br>Signature Tool</h1>
-		<p>Please read the <a href="#documentation">documentation</a> for more information, and read the <a href="LICENSE">license</a> before use.</p>
-		</div> <!--/.section-title-->
+			<div class="section section-tests">
+				<h2>Tests</h2>
+				<p>Please run and ensure all tests pass before using this tool.</p>
+				<div class="container container-button-box">
+					<div class="button-box">
+						<input type="button" id="runVectorTests" value="Run Vector Tests" class="btn"></input>
+						<p>Test the algorithms according to the test vectors provided in RFC8037</p>
+					</div>
+					<div class="button-box">
+						<input type="button" id="runGeneratorTests" value="Run Generator Tests" class="btn"></input>
+						<p>Generate a fresh keypair and validate the generated JWS</p>
+					</div>
+					<div class="button-box">
+						<input type="reset" id="resetTests" class="btn"></input>
+						<p>Clear the form</p>
+					</div>
+				</div> <!--/.container.container-button-box-->
+			</div> <!--/.section.section-tests-->
+		</div> <!--/.container-->
 
-		<div class="section-tests">
-		<h2>Tests</h2>
-		<p>Please run and ensure all tests pass before using this tool.</p>
-		<p>
-			
-			<table>
-				<tr>
-					<td><input type="button" id="runVectorTests" value="Run Vector Tests"></input>
-					<label>Test the algorithms according to the test vectors provided in RFC8037</label></td>
+		<div class="container">
+			<div class="section section-content">
+				<h2>Ed25519 Keypair Generator</h2>
+				<p>Click the button below to generate a Ed25519 keypair. It is NOT RECOMMENDED to use this tool to generate production keys. <a href="#doc-production-keys">[?]</a></p>
+				<p>
+					<input type="button" id="generateKeypair" value="Generate Keypair"  class="btn"></input><br/>
+					<input type="checkbox" id="useSeed"></input> <label for="useSeed">Use seed  <a href="#doc-keypair-seed">[?]</a> :</label> <input type="text" id="keySeed" size="50" class="textfield"></input>
+					
+					<br/><br/>
 
-					<td><input type="button" id="runGeneratorTests" value="Run Generator Tests"></input>
-					<label>Generate a fresh keypair and validate the generated JWS</label></td>
+					<input type="checkbox" id="includeDates" checked></input> <label for="includeDates">Include issued at and expiry dates.</label> Expire in: <input type="number" id="expiryYears" value="1" step="0.01" min="0" class="textfield years"></input> years <a href="#doc-keypair-dates">[?]</a>
+				</p>
+			</div> <!--/.section.section-content-->
 
-					<td><input type="reset"></input> 
-					<label>Clear the form</label></td>
-				</tr>
+			<div class="section section-content">
+				<h2>Ed25519 JSON Web Keys (JWK)</h2>
+				<h3>Secret JWK</h3>
+				<p><textarea id="secretKey" rows="4" cols="50" class="textfield"></textarea></p>
+				<h3>Public JWK</h3>
+				<p><textarea id="publicKey" rows="4" cols="50" class="textfield"></textarea></p>
+				<p><input type="button" id="generateThumbprint" value="Generate JWK Thumbprint" class="btn"></input></p>
+				<h3>JWK Thumbprint (SHA-256)</h3>
+				<p>This will only work with Ed25519 JWKs. <a href="#doc-jwk-thumbprint">[?]</a></p>
+				<p><input type="text" id="jwkThumbprint" size="50" readonly class="textfield"></input></p>
+			</div> <!--/.section.section-content-->
+		</div> <!--/.container-->
 
-			</table>
-		</p>
-		</div> <!--/.section-tests-->
-		<div class="divider"></div>
-		</div> <!--/.page-header-->
+		<div class="container">
+			<div class="section section-content">
+				<h2>JSON Web Signature (JWS) with Ed25519</h2>
 
+				<div class="container container-content">
+					<div class="section section-content">
+						<h3>JWS Protected Header</h3>
+						<p>The header MUST conform to the requirements of <a href="https://tools.ietf.org/html/rfc7515#section-4">RFC 7515 section 4</a>. <a href="#doc-jws-protected-header">[?]</a></p>
+
+						<p><textarea id="jwsProtectedHeader" rows="4" class="textfield">{"alg":"EdDSA"}</textarea></p>
+
+						<h3>JWS Payload</h3>
+						<p><textarea id="jwsPayload" rows="4" class="textfield"></textarea></p>
+
+						<p><input type="button" id="generateInputAndSignature" value="Generate JWS Details" class="btn"></input></p>
+					</div> <!--/.section.section-content-->
+					<div class="section section-content">
+						<h3>JWS Signing Input</h3>
+						<p><code>JWS Signing Input = ASCII(BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload))</code> <a href="#doc-jws-compact-serial">[?]</a></p>
 		
-		<div class="row">
-		<div class="section-col-left">
-		<h2>Ed25519 Keypair Generator</h2>
-		<p>Click the button below to generate a Ed25519 keypair. It is NOT RECOMMENDED to use this tool to generate production keys. <a href="#doc-production-keys">[?]</a></p>
-		<p>
-			<input type="button" id="generateKeypair" value="Generate Keypair"  class="btn"></input><br/>
-			<input type="checkbox" id="useSeed"></input> <label for="useSeed">Use seed  <a href="#doc-keypair-seed">[?]</a> :</label> <input type="text" id="keySeed" size="50" class="textfield"></input>
-			
-			<br/><br/>
-
-			<input type="checkbox" id="includeDates" checked></input> <label for="includeDates">Include issued at and expiry dates.</label> Expire in: <input type="number" id="expiryYears" value="1" step="0.01" min="0" class="textfield years"></input> years <a href="#doc-keypair-dates">[?]</a>
-		</p>
-		</div> <!--/.section-col-left-->
-
-		<div class="section-col-right">
-		<h2>Ed25519 JSON Web Keys (JWK)</h2>
-		<h3>Secret JWK</h3>
-		<p><textarea id="secretKey" rows="4" cols="50" class="textfield"></textarea></p>
-		<h3>Public JWK</h3>
-		<p><textarea id="publicKey" rows="4" cols="50" class="textfield"></textarea></p>
-		<p><input type="button" id="generateThumbprint" value="Generate JWK Thumbprint" class="btn"></input></p>
-		<h3>JWK Thumbprint (SHA-256)</h3>
-		<p>This will only work with Ed25519 JWKs. <a href="#doc-jwk-thumbprint">[?]</a></p>
-		<p><input type="text" id="jwkThumbprint" size="50" readonly class="textfield"></input></p>
-		</div> <!--/.section-col-right-->
-		<div class="divider"></div>
-		</div> <!--/.row-->
-
-
-
-		<div class="row">
-		<div class="section-col-left">
-		<h2>JSON Web Signature (JWS) with Ed25519</h2>
-
-		<h3>JWS Protected Header</h3>
-		<p>The header MUST conform to the requirements of <a href="https://tools.ietf.org/html/rfc7515#section-4">RFC 7515 section 4</a>. <a href="#doc-jws-protected-header">[?]</a></p>
-
-		<p><textarea id="jwsProtectedHeader" rows="4" class="textfield"></textarea></p>
-
-		<h3>JWS Payload</h3>
-		<p><textarea id="jwsPayload" rows="4" class="textfield"></textarea></p>
-
-		<p><input type="button" id="generateInputAndSignature" value="Generate Signing Input and Signature" class="btn"></input></p>
-		</div> <!--/.section-col-left-->
-
-		<div class="section-col-right">
-		<h3>JWS Signing Input</h3>
-		<p><code>JWS Signing Input = ASCII(BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload))</code> <a href="#doc-jws-compact-serial">[?]</a></p>
-
-		<p><textarea id="signingInput" rows="4" cols="50" readonly class="textfield"></textarea></p>
-
-		<h3>JWS Signature in base64url</h3>
-
-		<p><textarea id="signatureOutput" rows="4" cols="50" readonly class="textfield"></textarea></p>
+						<p><textarea id="signingInput" rows="4" cols="50" readonly class="textfield"></textarea></p>
 		
-		<h3>JWS Compact Serialization</h3>
-
-		<p><code>JWS Compact Serialization = BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload) || '.' || BASE64URL(JWS Signature)</code> <a href="#doc-jws-compact-serial">[?]</a></p>
-
-		<p><textarea id="jwsCompactSerialized" rows="4" cols="50" class="textfield"></textarea></p>
-
-		<p>
-			<table>
-				<tr>
-					<td><input type="button" id="deconstructJws" value="Deconstruct JWS" class="btn"></input>  <label>This extracts the JWS Protected Header and Payload from the compact serialized JWS.</label></td>
-					<td><input type="button" id="validateJws" value="Validate Ed25519-signed JWS" class="btn"></input> <label>Please provide Ed25519 Public JWK above to validate.</label></td>
-				</tr>
-			
-			
-			</table>
-		</p>
-
-		</div> <!--/.section-col-right-->
-		<div class="divider"></div>
-		</div> <!--/.row-->
+						<h3>JWS Signature in base64url</h3>
+		
+						<p><textarea id="signatureOutput" rows="4" cols="50" readonly class="textfield"></textarea></p>
+		
+						<h3>JWS Compact Serialization</h3>
+		
+						<p><code>JWS Compact Serialization = BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL(JWS Payload) || '.' || BASE64URL(JWS Signature)</code> <a href="#doc-jws-compact-serial">[?]</a></p>
+		
+						<p><textarea id="jwsCompactSerialized" rows="4" cols="50" class="textfield"></textarea></p>
+		
+						<div class="container container-button-box">
+							<div class="button-box">
+								<input type="button" id="deconstructJws" value="Deconstruct JWS" class="btn"></input>
+								<p>This extracts the JWS Protected Header and Payload from the compact serialized JWS.</p>
+							</div>
+							<div class="button-box">
+								<input type="button" id="validateJws" value="Validate Ed25519-signed JWS" class="btn"></input>
+								<p>Please provide Ed25519 Public JWK above to validate.</p>
+							</div>
+						</div> <!--/.container.container-button-box-->
+					</div> <!--/.section.section-content-->
+				</div> <!--/.container.container-content-->
+			</div> <!--/.section.section-content-->
+		</div> <!--/.container-->
 	</form>
 	
 	<div class="doc">
-	<h1 id="documentation">Documentation</h1>
-	<h2>Common Use Cases</h2>
-	<h3>Generate an Ed25519 Keypair</h3>
-	<p>This tool is able to generate Ed25519 keypairs and output them in JSON Web Key (JWK) format per <a href="https://tools.ietf.org/html/rfc7517">RFC 7517</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Click the "Generate Keypair" button to randomly generate a keypair. A <span class="seed-length"></span>-byte seed may be provided, and the tool is able to output the date and time the keys were generated, and compute its user-defined expiry date.</p>
-	<h3>Generate the JWK Thumbprint of an Ed25519 JWK</h3>
-	<p>This tool is able to generate the SHA-256 JWK Thumbprint of a Ed25519 JWK given the public JWK per <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the JWK into the "Public JWK" text box and click the "Generate JWK Thumbprint" button.</p>
-	<h3>Generate an Ed25519-signed JWS</h3>
-	<p>This tool is able to generate an Ed25519-signed JSON Web Signature (JWS) per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Secret JWK, JWS Protected Header, and JWS Payload, and then click the "Generate Signing Input and Signature" button. The JWS in Compact Serialization format will be computed.</p>
-	<h3>Deconstruct a JWS</h3>
-	<p>This tool is able to extract the JWS Protected Header and JWS Payload of a given JWS in Compact Serialization format per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>. Enter the JWS Compact Serialization data, and click the "Deconstruct JWS" button. The JWS Protected Header and JWS Payload will be shown on their fields respectively.</p>
-	<h3>Validate an Ed25519-signed JWS</h3>
-	<p>This tool is able to validate an Ed25519-signed JWS per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Public JWK and JWS Compact Serialization data, and click the "Validate Ed25519-signed JWS" button. A prompt will show the result of the validation.</p>
-	<h2>Overview</h2>
-	<p>This tool is used to generate keys, sign, and verify using the Ed25519 signature algorithm in the context of:
-		<ul>
-			<li>JSON Web Signature (JWS) [<a href="https://tools.ietf.org/html/rfc7515">RFC7515</a>]</li>
-			<li>JSON Web Key (JWK) [<a href="https://tools.ietf.org/html/rfc7517">RFC7517</a>]</li>
-			<li>JSON Web Key (JWK) Thumbprint [<a href="https://tools.ietf.org/html/rfc7638">RFC7638</a>]</li>
-			<li>Edwards-Curve Digital Signature Algorithm (EdDSA) [<a href="https://tools.ietf.org/html/rfc8032">RFC8032</a>]</li>
-			<li>CFRG Elliptic Curve Diffie-Hellman (ECDH) and Signatures in JSON Object Signing and Encryption (JOSE) [<a href="https://tools.ietf.org/html/rfc8037">RFC8037</a>]</li>
-		</ul>
-	</p>
-	<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
-	<p>All Base64 data used in this tool conform to the Base 64 URL-safe encoding without padding characters defined in <a href="https://tools.ietf.org/html/rfc4648#section-5">RFC 4648 section 5</a>.</p>
-	<p>Built using <a href="https://github.com/jedisct1/libsodium.js">libsodium.js</a>, the JavaScript port of <a href="https://libsodium.gitbook.io/">libsodium</a>, <a href="https://jquery.com/">jQuery</a>, and <a href="https://html5boilerplate.com/">HTML5 Boilerplate</a>.</p>
-	<h2>Usage Notes</h2>
-	<h3 id="doc-production-keys">Generating Production Keys</h3>
-	<p>It is NOT RECOMMENDED to use this tool to generate production keys. This is because the browser's in-built random number generator may not be cryptographically secure, and a browser may cache information, and may contain third-party plugins that could read the content on the page. Therefore, we RECOMMEND using a desktop tool designed to generate production keys in an air-gapped machine.</p>
-	<h3 id="doc-keypair-seed">Seeding the Keypair Generator</h3>
-	<p>libsodium is able to generate a keypair given a seed. The seed must be exactly <span class="seed-length"></span> bytes, in Base 64 URL-safe format. Ideally, the seed should be a cryptographically-secure random number, used only once, and discarded thereafter. The using the same seed will always result in the same keypair.</p>
-	<h3 id="doc-keypair-dates">Keypair Issued At and Expiry Dates</h3>
-	<p>The RFCs do not define "issued at" and "expiry" dates on JSON Web Keys (JWK). Hence, the fields, <code>"iat"</code> and <code>"exp"</code>, used here are custom to this tool, and it is entirely up to the application to make use of these fields. Do note that these fields may be modified by hand and thus should not be entirely relied upon to manage key expiries.</p>
-	<p>The expiry years provided to this tool must be a positive number, in steps of 0.01 years.</p>
-	<h3 id="doc-jwk-thumbprint">JWK Thumbprint Limitations</h3>
-	<p>The JWK Thumbprint according to <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> should be computed only with public key material (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.1">section 3.2.1</a>), and only on mandatory parameters (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.2">section 3.2.2</a>). Because this tool is designed for the Ed25519 signature algorithm, it only knows which are the mandatory public key parameters for the Ed25519 algorithm. Hence, this tool MUST NOT be used to generate JWK Thumbprints of non-Ed25519 JWKs.</p>
-	<h3 id="doc-jws-protected-header">JWS Protected Header Requirements</h3>
-	<p>According to <a href="https://tools.ietf.org/html/rfc7515#section-7.1">RFC 7515 section 7.1</a>, a JWS serialized according to the Compact Serialization format MUST contain a JWS Protected Header. And according to <a href="https://tools.ietf.org/html/rfc7515#section-4">section 4</a>, such header MUST contain the <code>"alg"</code> parameter. In a Ed25519-signed JWS, per <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>, the <code>"alg"</code> parameter MUST be equal to <code>"EdDSA"</code>. This tool will validate that the JWS Protected Header contains the <code>"alg"</code> parameter equal to <code>"EdDSA"</code>. The tool will ignore other parameters in the header, and will not validate the <code>"crit"</code> parameter according to <a href="https://tools.ietf.org/html/rfc7515#section-4.1.11">section 4.1.11</a>.</p>
-	<h3 id="doc-jws-compact-serial">JWS Compact Serialization Computation</h3>
-	<p>For further details on how the components of the JWS Compact Serialization are computed, please refer to <a href="https://tools.ietf.org/html/rfc7515#section-5.1">RFC 7515 section 5.1</a>.</p>
+		<h1 id="documentation">Documentation</h1>
+		<h2>Common Use Cases</h2>
+		<h3>Generate an Ed25519 Keypair</h3>
+		<p>This tool is able to generate Ed25519 keypairs and output them in JSON Web Key (JWK) format per <a href="https://tools.ietf.org/html/rfc7517">RFC 7517</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Click the "Generate Keypair" button to randomly generate a keypair. A <span class="seed-length"></span>-byte seed may be provided, and the tool is able to output the date and time the keys were generated, and compute its user-defined expiry date.</p>
+		<h3>Generate the JWK Thumbprint of an Ed25519 JWK</h3>
+		<p>This tool is able to generate the SHA-256 JWK Thumbprint of a Ed25519 JWK given the public JWK per <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the JWK into the "Public JWK" text box and click the "Generate JWK Thumbprint" button.</p>
+		<h3>Generate an Ed25519-signed JWS</h3>
+		<p>This tool is able to generate an Ed25519-signed JSON Web Signature (JWS) per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Secret JWK, JWS Protected Header, and JWS Payload, and then click the "Generate JWS Details" button. The JWS in Compact Serialization format will be computed.</p>
+		<h3>Deconstruct a JWS</h3>
+		<p>This tool is able to extract the JWS Protected Header and JWS Payload of a given JWS in Compact Serialization format per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>. Enter the JWS Compact Serialization data, and click the "Deconstruct JWS" button. The JWS Protected Header and JWS Payload will be shown on their fields respectively.</p>
+		<h3>Validate an Ed25519-signed JWS</h3>
+		<p>This tool is able to validate an Ed25519-signed JWS per <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a> and <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>. Enter the Public JWK and JWS Compact Serialization data, and click the "Validate Ed25519-signed JWS" button. A prompt will show the result of the validation.</p>
+		<h2>Overview</h2>
+		<p>This tool is used to generate keys, sign, and verify using the Ed25519 signature algorithm in the context of:
+			<ul>
+				<li>JSON Web Signature (JWS) [<a href="https://tools.ietf.org/html/rfc7515">RFC7515</a>]</li>
+				<li>JSON Web Key (JWK) [<a href="https://tools.ietf.org/html/rfc7517">RFC7517</a>]</li>
+				<li>JSON Web Key (JWK) Thumbprint [<a href="https://tools.ietf.org/html/rfc7638">RFC7638</a>]</li>
+				<li>Edwards-Curve Digital Signature Algorithm (EdDSA) [<a href="https://tools.ietf.org/html/rfc8032">RFC8032</a>]</li>
+				<li>CFRG Elliptic Curve Diffie-Hellman (ECDH) and Signatures in JSON Object Signing and Encryption (JOSE) [<a href="https://tools.ietf.org/html/rfc8037">RFC8037</a>]</li>
+			</ul>
+		</p>
+		<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
+		<p>All Base64 data used in this tool conform to the Base 64 URL-safe encoding without padding characters defined in <a href="https://tools.ietf.org/html/rfc4648#section-5">RFC 4648 section 5</a>.</p>
+		<p>Built using <a href="https://github.com/jedisct1/libsodium.js">libsodium.js</a>, the JavaScript port of <a href="https://libsodium.gitbook.io/">libsodium</a>, <a href="https://jquery.com/">jQuery</a>, and <a href="https://html5boilerplate.com/">HTML5 Boilerplate</a>.</p>
+		<h2>Usage Notes</h2>
+		<h3 id="doc-production-keys">Generating Production Keys</h3>
+		<p>It is NOT RECOMMENDED to use this tool to generate production keys. This is because the browser's in-built random number generator may not be cryptographically secure, and a browser may cache information, and may contain third-party plugins that could read the content on the page. Therefore, we RECOMMEND using a desktop tool designed to generate production keys in an air-gapped machine.</p>
+		<h3 id="doc-keypair-seed">Seeding the Keypair Generator</h3>
+		<p>libsodium is able to generate a keypair given a seed. The seed must be exactly <span class="seed-length"></span> bytes, in Base 64 URL-safe format. Ideally, the seed should be a cryptographically-secure random number, used only once, and discarded thereafter. The using the same seed will always result in the same keypair.</p>
+		<h3 id="doc-keypair-dates">Keypair Issued At and Expiry Dates</h3>
+		<p>The RFCs do not define "issued at" and "expiry" dates on JSON Web Keys (JWK). Hence, the fields, <code>"iat"</code> and <code>"exp"</code>, used here are custom to this tool, and it is entirely up to the application to make use of these fields. Do note that these fields may be modified by hand and thus should not be entirely relied upon to manage key expiries.</p>
+		<p>The expiry years provided to this tool must be a positive number, in steps of 0.01 years.</p>
+		<h3 id="doc-jwk-thumbprint">JWK Thumbprint Limitations</h3>
+		<p>The JWK Thumbprint according to <a href="https://tools.ietf.org/html/rfc7638">RFC 7638</a> should be computed only with public key material (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.1">section 3.2.1</a>), and only on mandatory parameters (<a href="https://tools.ietf.org/html/rfc7638#section-3.2.2">section 3.2.2</a>). Because this tool is designed for the Ed25519 signature algorithm, it only knows which are the mandatory public key parameters for the Ed25519 algorithm. Hence, this tool MUST NOT be used to generate JWK Thumbprints of non-Ed25519 JWKs.</p>
+		<h3 id="doc-jws-protected-header">JWS Protected Header Requirements</h3>
+		<p>According to <a href="https://tools.ietf.org/html/rfc7515#section-7.1">RFC 7515 section 7.1</a>, a JWS serialized according to the Compact Serialization format MUST contain a JWS Protected Header. And according to <a href="https://tools.ietf.org/html/rfc7515#section-4">section 4</a>, such header MUST contain the <code>"alg"</code> parameter. In a Ed25519-signed JWS, per <a href="https://tools.ietf.org/html/rfc8037">RFC 8037</a>, the <code>"alg"</code> parameter MUST be equal to <code>"EdDSA"</code>. This tool will validate that the JWS Protected Header contains the <code>"alg"</code> parameter equal to <code>"EdDSA"</code>. The tool will ignore other parameters in the header, and will not validate the <code>"crit"</code> parameter according to <a href="https://tools.ietf.org/html/rfc7515#section-4.1.11">section 4.1.11</a>.</p>
+		<h3 id="doc-jws-compact-serial">JWS Compact Serialization Computation</h3>
+		<p>For further details on how the components of the JWS Compact Serialization are computed, please refer to <a href="https://tools.ietf.org/html/rfc7515#section-5.1">RFC 7515 section 5.1</a>.</p>
 	</div> <!--/.doc-->
-
 
 	<script src="js/vendor/jquery-3.3.1.min.js"></script>
 	<script src="js/vendor/sodium.js"></script>
