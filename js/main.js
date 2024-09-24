@@ -1,8 +1,8 @@
 /**
  * @file Provides the functionality of Ed25519.html.
  * @author Isaac Chua
- * @version 1.1.0
- * @copyright 2019 Isaac Chua
+ * @version 1.1.1
+ * @copyright 2019-2024 Isaac Chua
  * @license MIT
  */
 
@@ -146,7 +146,7 @@
 		if (isUndefined(publicKey)) return false;
 
 		// process JWS into its parts
-		let parts = $("#jwsCompactSerialised").val().split(".");
+		let parts = $("#jwsCompactSerialized").val().split(".");
 		if (parts.length !== 3) {
 			alertAndLog("Parts of JWS not exactly 3: " + parts.length);
 			return false;
@@ -211,7 +211,7 @@
 			alertAndLog("Calculated JWS signature outputs do not match.");
 			return false;
 		}
-		if ($("#jwsCompactSerialised").val() !== TEST_JWS_COMPACT_SERIALISED) {
+		if ($("#jwsCompactSerialized").val() !== TEST_JWS_COMPACT_SERIALISED) {
 			alertAndLog("Calculated JWS outputs do not match.");
 			return false;
 		}
@@ -306,7 +306,7 @@
 		$("#publicKey").val(publicKey);
 		clearThumbprintField();
 		clearSignatureFields();
-		$("#jwsCompactSerialised").val("");
+		$("#jwsCompactSerialized").val("");
 		return true;
 	}
 
@@ -342,13 +342,13 @@
 		let signature = sodium.crypto_sign_detached(signingInput, secretKey["dx_b"]);
 		let signatureBase64 = sodium.to_base64(signature, sodium.base64_variants.URLSAFE_NO_PADDING);
 		$("#signatureOutput").val(signatureBase64);
-		$("#jwsCompactSerialised").val(signingInput + "." + signatureBase64);
+		$("#jwsCompactSerialized").val(signingInput + "." + signatureBase64);
 		return true;
 	}
 
 	function deconstructJws (e) {
 		// process JWS into its parts
-		let parts = $("#jwsCompactSerialised").val().split(".");
+		let parts = $("#jwsCompactSerialized").val().split(".");
 		if (parts.length !== 3) {
 			alertAndLog("Parts of JWS not exactly 3: " + parts.length);
 			return false;
@@ -400,7 +400,7 @@
 		$("#publicKey").change(clearThumbprintField);
 		$("#jwsProtectedHeader").change(clearSignatureFields);
 		$("#jwsPayload").change(clearSignatureFields);
-		$("#jwsCompactSerialised").change(clearSignatureFields);
+		$("#jwsCompactSerialized").change(clearSignatureFields);
 		$(".seed-length").html(sodium.crypto_sign_SEEDBYTES);
 	});
 
