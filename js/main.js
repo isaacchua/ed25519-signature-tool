@@ -389,6 +389,10 @@
 		return true;
 	}
 
+	function setInputDisabled (e) {
+		e.data.prop("disabled", !e.currentTarget.checked);
+	}
+
 	$(document).ready(function () {
 		$("#runVectorTests").click(runVectorTests);
 		$("#runGeneratorTests").click(runGeneratorTests);
@@ -402,6 +406,8 @@
 		$("#jwsPayload").change(clearSignatureFields);
 		$("#jwsCompactSerialized").change(clearSignatureFields);
 		$(".seed-length").html(sodium.crypto_sign_SEEDBYTES);
+		$("#useSeed").on("click", $("#keySeed"), setInputDisabled);
+		$("#includeDates").on("click", $("#expiryYears"), setInputDisabled);
 	});
 
 	return {
