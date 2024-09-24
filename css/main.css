@@ -105,70 +105,60 @@ textarea {
 
 
 body {
-    width:98%;
-    margin-left:auto;
-    margin-right:auto;
+    width: calc(100% - 20px);
+    margin: 10px auto;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-a{
+a {
     color: #2f75df;
 }
 
-.divider {
-    clear:both;
-    height:1px;
-    display:block;
-    width: 100%;
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px auto;
 }
 
-.clear {
-    clear: both;
-  }
-
-.page-header {
-    background: #daf1fd;
-    padding: 0;
-    margin-top:10px;
-    border-radius: 5px;
+.section {
+    border-radius: 10px;
+    padding: 25px;
     letter-spacing:-0.01em;
     color: #363636;
 }
 
-.section-title {
-    width: 35%;
-    float: left;
-    padding: 25px;
+.container-header .section {
+    background: #daf1fd;
     text-align: center;
 }
 
+.container-header .section p {
+    padding: 0;
+    margin: 0 20px;
+}
+
+.section-title {
+    flex: 1 1 30%;
+}
+
 .section-title h1 {
-    padding:0;
-    margin:0 0 30px 0;
+    padding: 0;
+    margin: 0 0 20px 0;
     font-size: 3.3em;
     font-weight: normal;
     line-height: 1.1em;
     color: #305469;
 }
 
-.section-title p{
-    padding: 0;
-    margin:0;
-    font-size: 0.95em;
-}
-
-
 .section-tests {
-    text-align: center;
-    padding: 25px;
-    margin: 0 0 0 40%;
-    border-left: 10px solid #fff;
-    letter-spacing:-0.01em;
+    flex: 2 2 60%;
 }
 
 .section-tests h2 {
-    padding:0;
-    margin:0 0 10px 0;
+    padding: 0;
+    margin: 0 0 10px 0;
     font-size: 2em;
     font-weight: normal;
     line-height: 1.2em;
@@ -176,79 +166,22 @@ a{
     letter-spacing:-0.02em;
 }
 
-.section-tests p{
-    padding: 0;
-    margin:0;
-    font-size: 0.95em;
-}
-
-.section-tests table{
-    margin-top:20px;
-}
-
-.section-tests table tr td {
-    vertical-align: top;
-    padding: 10px;
-    text-align: center;
-    width: 33%;
-}
-
-.section-tests table tr td input {
-    display:block;
-    width: 100%;
-    margin:0 auto 0 auto;
-    padding:15px 30px 15px 30px ;
-    background: #1d6db8;
-    border:0;
-    border-radius: 10px;
-    font-weight:bold;
-    color:#fff;
-    cursor:pointer;
-}
-
-.section-tests table tr td input:hover {
-    background: #1d41b8;
-}
-
-.section-tests table tr td label {
-    font-size: 0.8em;
-    line-height: 1.3em;
-    margin:10px 0 0 0;
-    display:block;
-    font-weight:bold;
-}
-
-.row {
+.section-content {
     background: #f3f3f3;
-    margin-top:10px;
-    border-radius: 5px;
-    letter-spacing:-0.01em;
-    color: #363636;
-    
+    flex: 1 1 45%;
 }
 
-.section-col-left {
-    width: 47%;
-    float: left;
-    padding: 25px;
-    text-align: left;
+.container-content {
+    column-gap: 50px;
 }
 
-.section-col-right {
-    text-align: left;
-    padding: 25px;
-    margin: 0 0 0 50%;
-    border-left: 10px solid #fff;
-    letter-spacing:-0.01em;
+.container-content .section-content {
+    padding: 0;
 }
 
-.row p {
-    font-size:0.95em;
-}
-
-.section-col-left h2, .section-col-right h2 {
-    padding:0 0 15px 0;
-    margin: 0 0 30px 0;
+.section-content h2 {
+    padding: 0 0 15px 0;
+    margin: 0;
     font-size: 1.7em;
     font-weight: normal;
     line-height: 1.2em;
@@ -257,9 +190,13 @@ a{
     border-bottom:1px solid #ddd;
 }
 
-.section-col-left h3, .section-col-right h3 {
-    padding:0;
-    margin:0 0 10px 0;
+.section-content h2 + h3 {
+    margin-top: 10px;
+}
+
+.section-content h3 {
+    padding: 0;
+    margin: 20px 0 10px 0;
     font-size: 0.9em;
     font-weight: bold;
     line-height: 1.2em;
@@ -267,24 +204,21 @@ a{
     letter-spacing:-0.01em;
 }
 
-input.btn {
-    display:block;
-    padding:15px 30px 15px 30px ;
-    background: #18865c;
-    border:0;
-    border-radius: 10px;
-    font-weight:bold;
-    color:#fff;
-    cursor:pointer;
+.section-content h3:first-child {
+    margin-top: 0;
 }
 
-input.btn:hover {
-    background: #0a6442;
+.section-content h3 + p {
+    margin-top: 0;
+}
+
+.section-content p {
+    margin: 10px 0;
 }
 
 input.textfield, textarea.textfield {
     padding: 10px;
-    width:96%;
+    width: calc(100% - 24px);
     border-radius: 5px;
     border: 2px solid #a3a3a3;
     font-family: 'Courier New', Courier, monospace;
@@ -300,32 +234,24 @@ input.textfield.years {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.section-col-right table{
-    margin-top:20px;
+.container-button-box {
+    margin-top: 20px;
 }
 
-.section-col-right table tr td {
-    vertical-align: top;
-    padding: 10px;
+.section-tests .container-button-box {
+    justify-content: center;
+}
+
+.container-button-box .button-box {
     text-align: center;
-    width: 45%;
+    flex: 1 1 30%;
 }
 
-.section-col-right table tr td input {
-    display:block;
+.container-button-box .button-box input.btn {
     width: 100%;
-    margin:0 auto 0 auto;
-    padding:15px 30px 15px 30px ;
-    background: #18865c;
-    border:0;
-    border-radius: 10px;
-    font-weight:bold;
-    color:#fff;
-    cursor:pointer;
 }
 
-.section-col-right table tr td label {
+.container-button-box .button-box p {
     font-size: 0.8em;
     line-height: 1.3em;
     margin:10px 0 0 0;
@@ -333,7 +259,32 @@ input.textfield.years {
     font-weight:bold;
 }
 
+input.btn {
+    display:block;
+    padding:15px 30px 15px 30px ;
+    border:0;
+    border-radius: 10px;
+    font-weight:bold;
+    color:#fff;
+    cursor:pointer;
+    width: 100%;
+}
 
+.section-tests input.btn {
+    background: #1d6db8;
+}
+
+.section-tests input.btn:hover {
+    background: #1d41b8;
+}
+
+.section-content input.btn {
+    background: #18865c;
+}
+
+.section-content input.btn:hover {
+    background: #0a6442;
+}
 
 .doc {
     margin:20px 0 20px 0;
@@ -343,7 +294,6 @@ input.textfield.years {
     border: 1px solid #a8a8a8;
     padding:30px;
 }
-
 
 .doc h1 {
     font-size: 2.2em;
